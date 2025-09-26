@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Pathfinder
 {
-    public static List<Tile> FindPath(GridManager grid, Tile start, Tile goal)
+    public static List<Tile> FindPath(GridManager grid, Tile start, Tile goal, bool attackPath = false)
     {
         var visited = new HashSet<Tile>();
         var queue = new Queue<Tile>();
@@ -19,7 +19,8 @@ public class Pathfinder
 
             foreach (var neighbor in GetNeighbors(grid, current))
             {
-                if (!visited.Contains(neighbor) && neighbor.Type == TileType.Traversable)
+                bool tileStatement = attackPath ? neighbor.Type == TileType.Traversable || neighbor.Type == TileType.Cover : neighbor.Type == TileType.Traversable;
+                if (!visited.Contains(neighbor) && tileStatement)
                 {
                     visited.Add(neighbor);
                     cameFrom[neighbor] = current;

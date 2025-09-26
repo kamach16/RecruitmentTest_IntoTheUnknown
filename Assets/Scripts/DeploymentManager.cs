@@ -27,6 +27,7 @@ public class DeploymentManager : MonoBehaviour
                 {
                     Unit unitPlaced = Instantiate(unitToPlace, tile.transform.position, Quaternion.identity).GetComponent<Unit>();
                     unitPlaced.Initialize(tile, gridManager);
+                    tile.SetUnitOnMe(unitPlaced);
 
                     canPlaceUnit = false;
                     unitToPlace = null;
