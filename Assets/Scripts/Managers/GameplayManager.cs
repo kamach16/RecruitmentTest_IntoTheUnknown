@@ -144,7 +144,7 @@ public class GameplayManager : MonoBehaviour
                                     if (i <= currentUnit.MoveRange - 1)
                                         currentPath[i].ShowMoveReachablePathMarker();
                                     else
-                                        currentPath[i].ShowMoveUnreachablePathMarker();
+                                        currentPath[i].ShowAttackReachablePathMarker();
                                 }
                             }
                         }

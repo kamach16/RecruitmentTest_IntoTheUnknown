@@ -9,7 +9,9 @@ public abstract class Unit : MonoBehaviour
     [SerializeField] private int moveRange = 3;
     [SerializeField] private int attackRange = 2;
     [SerializeField] private float moveSpeed = 3f;
+    [SerializeField] private float rotationSpeed = 3f;
     [SerializeField] private Collider myCollider;
+    [SerializeField] private Animator animator;
 
     private Tile currentTile;
     private GridManager gridManager;
@@ -40,8 +42,7 @@ public abstract class Unit : MonoBehaviour
 
     public void MoveToByTilesCount(Tile tile, int count, Action callback)
     {
-        List<Tile> path = GetDirectPathByTileCount(tile, count);
-        
+        List<Tile> path = GetDirectPathByTileCount(tile, count);        
         if (!isMoving && path != null && path.Count <= moveRange + attackRange)
         {
             StopAllCoroutines();
@@ -52,6 +53,7 @@ public abstract class Unit : MonoBehaviour
     private IEnumerator MoveAlongPath(List<Tile> path, Action callback = null)
     {
         isMoving = true;
+        SetMoveAnimationState(true);
         currentTile.SetUnitOnMe(null);
 
         foreach (Tile tile in path)
@@ -63,6 +65,12 @@ public abstract class Unit : MonoBehaviour
             while (Vector3.Distance(transform.position, targetPos) > 0.01f)
             {
                 transform.position = Vector3.MoveTowards(transform.position, targetPos, moveSpeed * Time.deltaTime);
+
+                Vector3 lookPos = targetPos - transform.position;
+                lookPos.y = 0;
+                Quaternion rotation = Quaternion.LookRotation(lookPos);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * rotationSpeed);
+
                 yield return null;
             }
             
@@ -71,6 +79,7 @@ public abstract class Unit : MonoBehaviour
 
         currentTile.SetUnitOnMe(this);
         isMoving = false;
+        SetMoveAnimationState(false);
         callback?.Invoke();
     }
 
@@ -93,5 +102,11 @@ public abstract class Unit : MonoBehaviour
     private void DelayedInteraction()
     {
         myCollider.enabled = true;
+    }
+
+    private void SetMoveAnimationState(bool state)
+    {
+        if (animator != null)
+            animator.SetBool("move", state);
     }
 }
