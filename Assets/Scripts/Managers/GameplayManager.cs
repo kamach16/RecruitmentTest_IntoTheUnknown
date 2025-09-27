@@ -3,23 +3,16 @@ using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
 {
-    private Unit currentUnit;
-
     public bool HasInteractionWithUnit => currentUnit != null;
 
-    public static GameplayManager Instance { get; private set; }
-
     private List<Tile> currentPath = new List<Tile>();
+    private Unit currentUnit;
 
     private GridManager gridManager;
 
-    private Unit targetUnit;
-
-    private void Awake()
+    public void Initialize(GridManager gridManager)
     {
-        Instance = this;
-
-        gridManager = FindFirstObjectByType<GridManager>();
+        this.gridManager = gridManager;
     }
 
     private void Update()
@@ -65,12 +58,28 @@ public class GameplayManager : MonoBehaviour
                         enemyToDestroy = enemy;
                     else if (hasTile)
                         enemyToDestroy = tile1.UnitOnMe as Enemy;
-
-                    if (!currentUnit.CanAttack(enemyTile))
+                    else
                         return;
 
-                    enemyTile.SetUnitOnMe(null);
-                    Destroy(enemyToDestroy.gameObject);
+                    if(currentUnit.CanAttack(enemyTile)) // instant kill while in attack range
+                    {
+                        enemyTile.SetUnitOnMe(null);
+                        Destroy(enemyToDestroy.gameObject);
+                    }
+                    else if(currentUnit.GetPath(enemyTile).Count > currentUnit.AttackRange && 
+                        currentUnit.GetPath(enemyTile).Count <= currentUnit.AttackRange + currentUnit.MoveRange) // move and kill
+                    {
+                        currentUnit.MoveToByTilesCount(enemyTile, currentUnit.GetPath(enemyTile).Count - currentUnit.AttackRange, () =>
+                        {
+                            enemyTile.SetUnitOnMe(null);
+                            Destroy(enemyToDestroy.gameObject);
+                        });
+                        return;
+                    }
+                    else if (!currentUnit.CanAttack(enemyTile))
+                        return;
+
+                    ResetPath();
                 }
             }
             else
@@ -124,15 +133,33 @@ public class GameplayManager : MonoBehaviour
                             ResetPath();
                         }
 
-                        currentPath = currentUnit.GetPath(targetTile, true);
-                        if (currentPath != null)
+                        if (currentUnit.GetPath(targetTile).Count > currentUnit.AttackRange &&
+                        currentUnit.GetPath(targetTile).Count <= currentUnit.AttackRange + currentUnit.MoveRange) // move path while can move and kill
                         {
-                            for (int i = 0; i < currentPath.Count; i++)
+                            currentPath = currentUnit.GetPath(targetTile);
+                            if (currentPath != null)
                             {
-                                if (i <= currentUnit.AttackRange - 1)
-                                    currentPath[i].ShowAttackReachablePathMarker();
-                                else
-                                    currentPath[i].ShowAttackUnreachablePathMarker();
+                                for (int i = 0; i < currentPath.Count; i++)
+                                {
+                                    if (i <= currentUnit.MoveRange - 1)
+                                        currentPath[i].ShowMoveReachablePathMarker();
+                                    else
+                                        currentPath[i].ShowMoveUnreachablePathMarker();
+                                }
+                            }
+                        }
+                        else
+                        {
+                            currentPath = currentUnit.GetPath(targetTile, true);
+                            if (currentPath != null)
+                            {
+                                for (int i = 0; i < currentPath.Count; i++)
+                                {
+                                    if (i <= currentUnit.AttackRange - 1)
+                                        currentPath[i].ShowAttackReachablePathMarker();
+                                    else
+                                        currentPath[i].ShowAttackUnreachablePathMarker();
+                                }
                             }
                         }
                     }

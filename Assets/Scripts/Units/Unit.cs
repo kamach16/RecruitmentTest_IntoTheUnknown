@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
+using System;
 
 public abstract class Unit : MonoBehaviour
 {
@@ -36,7 +38,18 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveAlongPath(List<Tile> path)
+    public void MoveToByTilesCount(Tile tile, int count, Action callback)
+    {
+        List<Tile> path = GetDirectPathByTileCount(tile, count);
+        
+        if (!isMoving && path != null && path.Count <= moveRange + attackRange)
+        {
+            StopAllCoroutines();
+            StartCoroutine(MoveAlongPath(path, callback));
+        }
+    }
+
+    private IEnumerator MoveAlongPath(List<Tile> path, Action callback = null)
     {
         isMoving = true;
         currentTile.SetUnitOnMe(null);
@@ -58,17 +71,23 @@ public abstract class Unit : MonoBehaviour
 
         currentTile.SetUnitOnMe(this);
         isMoving = false;
+        callback?.Invoke();
     }
 
     public bool CanAttack(Tile enemyTile)
     {
-        var path = Pathfinder.FindPath(gridManager, currentTile, enemyTile);
+        var path = Pathfinder.FindPath(gridManager, currentTile, enemyTile, true);
         return path != null && path.Count <= attackRange;
     }
 
     public List<Tile> GetPath(Tile endTile, bool attackPath = false)
     {
         return Pathfinder.FindPath(gridManager, currentTile, endTile, attackPath);
+    }
+
+    public List<Tile> GetDirectPathByTileCount(Tile endTile, int count, bool attackPath = false)
+    {
+        return Pathfinder.FindPath(gridManager, currentTile, endTile, attackPath).Take(count).ToList();
     }
 
     private void DelayedInteraction()

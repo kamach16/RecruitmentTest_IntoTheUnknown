@@ -64,13 +64,13 @@ public class Tile : MonoBehaviour
 
     private void OnMouseEnter()
     {
-        if (!GameplayManager.Instance.HasInteractionWithUnit && type == TileType.Traversable && defaultMarker != null)
+        if (!GameManager.Instance.GameplayManager.HasInteractionWithUnit && type == TileType.Traversable && defaultMarker != null)
             defaultMarker.SetActive(true);
     }
 
     private void OnMouseExit()
     {
-        if (!GameplayManager.Instance.HasInteractionWithUnit && type == TileType.Traversable && defaultMarker != null)
+        if (!GameManager.Instance.GameplayManager.HasInteractionWithUnit && type == TileType.Traversable && defaultMarker != null)
             defaultMarker.SetActive(false);
     }
 }

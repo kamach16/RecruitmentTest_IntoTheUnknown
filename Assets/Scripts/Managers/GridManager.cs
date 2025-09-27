@@ -13,13 +13,6 @@ public class GridManager : MonoBehaviour
     private int[,] mapData;
     private Tile[,] tiles;
 
-    // ui button event 
-    public void GenerateMap()
-    {
-        DestroyMap();
-        GenerateTiles();
-    }
-
     private void GenerateTiles()
     {
         mapData = new int[levelData.Width, levelData.Height];
@@ -28,9 +21,9 @@ public class GridManager : MonoBehaviour
         {
             for (int y = 0; y < levelData.Height; y++)
             {
-                float r = UnityEngine.Random.value;
-                if (r < 0.1f) mapData[x, y] = 1; // obstacle
-                else if (r < 0.2f) mapData[x, y] = 2; // cover
+                float percentage = UnityEngine.Random.value * 100;
+                if (percentage < levelData.PercentageToGetObstacle) mapData[x, y] = 1; // obstacle
+                else if (percentage < levelData.PercentageToGetCover) mapData[x, y] = 2; // cover
                 else mapData[x, y] = 0; // traversable
             }
         }
@@ -82,4 +75,10 @@ public class GridManager : MonoBehaviour
     }
 
     public Tile GetTile(int x, int y) => tiles[x, y];
+
+    public void GenerateMap()
+    {
+        DestroyMap();
+        GenerateTiles();
+    }
 }

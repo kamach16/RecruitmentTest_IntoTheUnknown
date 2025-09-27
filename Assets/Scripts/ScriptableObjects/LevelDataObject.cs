@@ -12,6 +12,8 @@ public class LevelDataObject : ScriptableObject
     [SerializeField] private List<GameObject> traversableTilePrefabs = new List<GameObject>();
     [SerializeField] private List<GameObject> obstacleTilePrefabs = new List<GameObject>();
     [SerializeField] private List<GameObject> coverTilePrefabs = new List<GameObject>();
+    [SerializeField] [Range(0, 100)] private float percentageToGetObstacle;
+    [SerializeField] [Range(0, 100)] private float percentageToGetCover;
 
     public int Width => width;
     public int Height => height;
@@ -19,4 +21,6 @@ public class LevelDataObject : ScriptableObject
     public List<GameObject> TraversableTilePrefabs => traversableTilePrefabs;
     public List<GameObject> ObstacleTilePrefabs => obstacleTilePrefabs;
     public List<GameObject> CoverTilePrefabs => coverTilePrefabs;
+    public float PercentageToGetObstacle => percentageToGetObstacle;
+    public float PercentageToGetCover => percentageToGetCover;
 }

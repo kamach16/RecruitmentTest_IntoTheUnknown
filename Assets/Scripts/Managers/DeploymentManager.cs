@@ -2,17 +2,25 @@ using UnityEngine;
 
 public class DeploymentManager : MonoBehaviour
 {
-    [SerializeField] private GridManager gridManager;
+    [SerializeField] private GameObject playerPrefab;
+    [SerializeField] private GameObject enemyPrefab;
 
     private bool canPlaceUnit;
     private GameObject unitToPlace;
+
+    private GridManager gridManager;
+
+    public void Initialize(GridManager gridManager)
+    {
+        this.gridManager = gridManager;
+    }
 
     private void Update()
     {
         PlaceUnit();
     }
 
-    public void PlaceUnit()
+    private void PlaceUnit()
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -36,10 +44,16 @@ public class DeploymentManager : MonoBehaviour
         }
     }
 
-    // ui button event 
-    public void SetUnitToPlace(GameObject unitPrefab)
+    public void SetPlayerToPlace()
     {
-        unitToPlace = unitPrefab;
+        unitToPlace = playerPrefab;
+
+        canPlaceUnit = true;
+    }
+
+    public void SetEnemyToPlace()
+    {
+        unitToPlace = enemyPrefab;
 
         canPlaceUnit = true;
     }

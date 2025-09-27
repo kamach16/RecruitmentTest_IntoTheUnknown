@@ -20,3 +20,5 @@ MonoBehaviour:
   - {fileID: 6493795798948576587, guid: a239a6a37240e53448041c0f654b20d5, type: 3}
   coverTilePrefabs:
   - {fileID: 6493795798948576587, guid: 49ab6dc0c6f291644819425ac45904ff, type: 3}
+  percentageToGetObstacle: 10
+  percentageToGetCover: 5
