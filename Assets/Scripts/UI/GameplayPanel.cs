@@ -16,8 +16,8 @@ public class GameplayPanel : MonoBehaviour
         this.gridManager = gridManager;
 
         placePlayerButton.onClick.AddListener(PlacePlayerButton_OnClick);
-        placeEnemyButton.onClick.AddListener(PlaceEnemyButton);
-        generateMapButton.onClick.AddListener(GenerateMapButton);
+        placeEnemyButton.onClick.AddListener(PlaceEnemyButton_OnClick);
+        generateMapButton.onClick.AddListener(GenerateMapButton_OnClick);
     }
 
     private void PlacePlayerButton_OnClick()
@@ -25,12 +25,12 @@ public class GameplayPanel : MonoBehaviour
         deploymentManager.SetPlayerToPlace();
     }
 
-    private void PlaceEnemyButton()
+    private void PlaceEnemyButton_OnClick()
     {
         deploymentManager.SetEnemyToPlace();
     }
 
-    private void GenerateMapButton()
+    private void GenerateMapButton_OnClick()
     {
         gridManager.GenerateMap();
     }

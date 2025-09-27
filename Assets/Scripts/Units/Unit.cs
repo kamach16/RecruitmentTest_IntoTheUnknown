@@ -15,7 +15,6 @@ public abstract class Unit : MonoBehaviour
 
     private Tile currentTile;
     private GridManager gridManager;
-
     private bool isMoving;
 
     public bool IsMoving => isMoving;

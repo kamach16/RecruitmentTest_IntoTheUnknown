@@ -5,8 +5,8 @@ public class GameCamera : MonoBehaviour
     [SerializeField] private float moveSpeed;
     [SerializeField] private float rotationSpeed;
 
-    private float yaw;   // obrót w osi Y (poziomy)
-    private float pitch; // obrót w osi X (pionowy)
+    private float yaw;
+    private float pitch;
 
     private void Start()
     {

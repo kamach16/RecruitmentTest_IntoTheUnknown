@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     private void Initialize()
     {
+        gridManager.Initialize(deploymentManager);
         deploymentManager.Initialize(gridManager);
         gameplayManager.Initialize(gridManager);
     }

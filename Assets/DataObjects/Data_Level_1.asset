@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3741365eabeffe144943f30da3f20581, type: 3}
   m_Name: Data_Level_1
   m_EditorClassIdentifier: 
-  width: 10
-  height: 10
+  width: 20
+  height: 20
   traversableTilePrefabs:
   - {fileID: 6493795798948576587, guid: 00b27d1cd299b084a9527b25caadaa25, type: 3}
   obstacleTilePrefabs:
   - {fileID: 6493795798948576587, guid: a239a6a37240e53448041c0f654b20d5, type: 3}
   coverTilePrefabs:
   - {fileID: 6493795798948576587, guid: 49ab6dc0c6f291644819425ac45904ff, type: 3}
-  percentageToGetObstacle: 10
-  percentageToGetCover: 5
+  percentageToGetObstacle: 9.8
+  percentageToGetCover: 37.1

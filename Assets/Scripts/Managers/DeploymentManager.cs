@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class DeploymentManager : MonoBehaviour
@@ -7,6 +8,7 @@ public class DeploymentManager : MonoBehaviour
 
     private bool canPlaceUnit;
     private GameObject unitToPlace;
+    private List<Unit> allUnits = new List<Unit>();
 
     private GridManager gridManager;
 
@@ -37,6 +39,13 @@ public class DeploymentManager : MonoBehaviour
                     unitPlaced.Initialize(tile, gridManager);
                     tile.SetUnitOnMe(unitPlaced);
 
+                    allUnits.Add(unitPlaced);
+
+                    canPlaceUnit = false;
+                    unitToPlace = null;
+                }
+                else
+                {
                     canPlaceUnit = false;
                     unitToPlace = null;
                 }
@@ -44,17 +53,30 @@ public class DeploymentManager : MonoBehaviour
         }
     }
 
+    public void DestroyAllUnits()
+    {
+        foreach (var unit in allUnits)
+        {
+            Destroy(unit.gameObject);
+        }
+        allUnits.Clear();
+    }
+
     public void SetPlayerToPlace()
     {
-        unitToPlace = playerPrefab;
+        if (!gridManager.MapGenerated)
+            return;
 
+        unitToPlace = playerPrefab;
         canPlaceUnit = true;
     }
 
     public void SetEnemyToPlace()
     {
-        unitToPlace = enemyPrefab;
+        if (!gridManager.MapGenerated)
+            return;
 
+        unitToPlace = enemyPrefab;
         canPlaceUnit = true;
     }
 }

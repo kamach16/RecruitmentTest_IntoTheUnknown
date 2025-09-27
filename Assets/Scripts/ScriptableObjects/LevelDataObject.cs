@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Data_Level_", menuName = "Scriptable Objects/Level Data Object", order = 1)]
+[CreateAssetMenu(fileName = "Data_Level_", menuName = "Scriptable Objects/Level Data Object")]
 public class LevelDataObject : ScriptableObject
 {
     [SerializeField] private int width = 10;

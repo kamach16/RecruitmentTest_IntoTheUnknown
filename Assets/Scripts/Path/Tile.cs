@@ -5,6 +5,8 @@ public class Tile : MonoBehaviour
     [SerializeField] private int x;
     [SerializeField] private int y;
     [SerializeField] private TileType type;
+
+    [Header("Markers")]
     [SerializeField] private GameObject defaultMarker;
     [SerializeField] private GameObject moveReachablePathMarker;
     [SerializeField] private GameObject moveUnreachablePathMarker;
