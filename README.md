@@ -7,6 +7,7 @@ It also features character integration (attacking and moving across the map) and
 ---
 
 ⚙️ **Features**
+
 👥 **Units Deployment – UI**
 - Add allies and enemies to the map using the script **`Assets/Scripts/Managers/DeploymentManager.cs`**
 - Unit deployment is only possible once the map has been generated
