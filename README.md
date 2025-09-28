@@ -6,6 +6,8 @@ This project is a recruitment task focused on creating a simple pathfinding demo
 The application includes a pathfinding system, a random map generation system triggered via a UI button during runtime, and two buttons for deploying allies and enemies on the map.
 It also features character integration (attacking and moving across the map) and a free-look camera.
 
+Project has one scene **`Assets/Scenes/Gameplay.unity`**
+
 For pathfinding, I used the **Breadth-First Search (BFS)** algorithm because the grid consists of tiles with uniform movement cost.
 In this case, BFS guarantees the shortest path and is simpler and faster than more general algorithms such as A*.
 
