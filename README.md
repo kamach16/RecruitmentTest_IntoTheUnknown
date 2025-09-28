@@ -6,6 +6,9 @@ This project is a recruitment task focused on creating a simple pathfinding demo
 The application includes a pathfinding system, a random map generation system triggered via a UI button during runtime, and two buttons for deploying allies and enemies on the map.
 It also features character integration (attacking and moving across the map) and a free-look camera.
 
+For pathfinding, I used the **Breadth-First Search (BFS)** algorithm because the grid consists of tiles with uniform movement cost.
+In this case, BFS guarantees the shortest path and is simpler and faster than more general algorithms such as A*.
+
 ---
 
 ## ⚙️ Features
@@ -31,8 +34,3 @@ It also features character integration (attacking and moving across the map) and
 - Select an ally by **left mouse button (LMB)** it, then click on a tile or an enemy to display the path
 - Path selection mechanics are implemented in **`Assets/Scripts/Path/PathFinder.cs`**
 - To cancel interaction with a selected unit, simply **left mouse button (LMB)** on an empty area (not a map element, e.g., the skybox)
-
----
-
-For pathfinding, I used the **Breadth-First Search (BFS)** algorithm because the grid consists of tiles with uniform movement cost.
-In this case, BFS guarantees the shortest path and is simpler and faster than more general algorithms such as A*.
