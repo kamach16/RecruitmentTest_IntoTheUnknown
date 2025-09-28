@@ -1,5 +1,7 @@
 **RecruitmentTest_InTheUnknown**
+
 📝 **Description**
+
 This project is a recruitment task focused on creating a simple pathfinding demo in Unity.
 The application includes a pathfinding system, a random map generation system triggered via a UI button during runtime, and two buttons for deploying allies and enemies on the map.
 It also features character integration (attacking and moving across the map) and a free-look camera.
